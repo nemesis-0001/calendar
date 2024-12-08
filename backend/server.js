@@ -4,7 +4,10 @@ const cors = require("cors");
 const mysql = require("mysql2");
 const db = require("./config/dbConfig");
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5000"];
+const allowedOrigins = [
+  "https://customize-task-calendar.vercel.app/",
+  "https://customize-task-calendar-api.onrender.com",
+];
 
 app.use(
   cors({
