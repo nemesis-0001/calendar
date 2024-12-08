@@ -262,28 +262,28 @@ const updateEvent = (req, res) => {
         return res.status(404).json({ error: "Event not found." });
       }
       // Ensure start and end times are ISO strings (optional but recommended)
-      const formattedResults = result.map((event) => ({
-        ...event,
-        start: new Date(event.start).toISOString(),
-        end: new Date(event.end).toISOString(),
-      }));
+      // const formattedResults = result.map((event) => ({
+      //   ...event,
+      //   start: new Date(event.start).toISOString(),
+      //   end: new Date(event.end).toISOString(),
+      // }));
 
-      res.status(200).json(formattedResults);
+      res.status(200).json({ message: "Event updated successfully." });
     }
   );
 };
 
 // Delete an event by ID
 const deleteEvent = (req, res) => {
-  const { id } = req.params;
-  console.log("Deleting event with ID:", id);
+  const { eventId } = req.params;
+  console.log("Deleting event with ID:", eventId);
   // const { userId } = req.body;
 
   const query = `
-    DELETE FROM events WHERE id = ? and firebaseUid = ?
+    DELETE FROM events WHERE id = ?
   `;
 
-  db.query(query, [id], (err, result) => {
+  db.query(query, [eventId], (err, result) => {
     if (err) {
       console.error("Error deleting event:", err);
       return res.status(500).json({ error: "Database error." });

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/dbConfig");
-const auth = require("../config/firebase");
 
 const Register = async (req, res) => {
   const { email, uid } = req.body;
@@ -28,7 +27,7 @@ const Register = async (req, res) => {
 const Login = async (req, res) => {
   console.log("Request Body:", req.body);
   const { email } = req.body.email;
-  const uid = console.log(email);
+  console.log(email);
   if (!email) {
     return res.status(400).json({ message: "Missing email or UID" });
   }

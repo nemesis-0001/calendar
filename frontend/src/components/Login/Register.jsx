@@ -23,7 +23,7 @@ export const Register = () => {
 
       console.log(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/login`);
       const res = await axios
-        .post(`http://localhost:5000/user/register`, {
+        .post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/register`, {
           email,
           uid,
         })

@@ -1,109 +1,3 @@
-// // // exports default ColoredDateCellWrapper;
-// import React, { useCallback, useState, useEffect } from "react";
-// import { Calendar, Views, momentLocalizer } from "react-big-calendar";
-// import moment from "moment";
-// import axios from "axios";
-// import "react-big-calendar/lib/css/react-big-calendar.css";
-
-// const localizer = momentLocalizer(moment);
-
-// export default function MyCalendar({ userId }) {
-//   const [events, setEvents] = useState([]);
-//   const [showModal, setShowModal] = useState(false);
-//   const [modalData, setModalData] = useState({
-//     title: "",
-//     start: new Date(),
-//     end: new Date(),
-//     desc: "",
-//   });
-
-//   // Fetch events from the database for the logged-in user
-
-//   const fetchAllEvents = async (userId) => {
-//     try {
-//       const res = await axios.get(
-//         `http://localhost:5000/task/getEvents/${userId}`
-//       );
-
-//       const transformedEvents = res.data.map((event) => ({
-//         id: event.id,
-//         title: event.title,
-//         start: new Date(event.start), // Convert ISO string to Date
-//         end: new Date(event.end), // Convert ISO string to Date
-//         desc: event.desc,
-//       }));
-
-//       setEvents(transformedEvents);
-//       // setEvents(res.data);
-//     } catch (error) {
-//       console.error("Error fetching events:", error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchAllEvents(userId);
-//   }, [userId]);
-
-//   // Create a new event
-//   const handleSelectSlot = useCallback(
-//     ({ start, end }) => {
-//       const title = window.prompt("Enter Event Title:");
-//       const desc = window.prompt("Enter Event Desc:");
-
-//       if (title || desc) {
-//         const newEvent = {
-//           title,
-//           start: moment(start).format("YYYY-MM-DD HH:mm:ss"), // Convert to MySQL-friendly format
-//           end: moment(end).format("YYYY-MM-DD HH:mm:ss"),
-//           desc,
-//           userId,
-//         };
-
-//         console.log(newEvent);
-
-//         axios
-//           .post("http://localhost:5000/task/events", newEvent)
-//           .then((response) => {
-//             setEvents((prevEvents) => [...prevEvents, response.data]);
-//           })
-//           .catch((error) => console.error("Error saving event:", error));
-//       }
-//     },
-//     [userId]
-//   );
-
-//   // Edit an event
-//   const handleSelectEvent = useCallback((event) => {
-//     const newTitle = window.prompt("Edit Event Title:", event.title);
-//     if (newTitle) {
-//       const updatedEvent = { ...event, title: newTitle };
-//       axios
-//         .put(`http://localhost:5000/task/events/${event.id}`, updatedEvent)
-//         .then(() => {
-//           setEvents((prevEvents) =>
-//             prevEvents.map((evt) => (evt.id === event.id ? updatedEvent : evt))
-//           );
-//         })
-//         .catch((error) => console.error("Error updating event:", error));
-//     }
-//   }, []);
-
-//   return (
-//     <div className="h-screen w-screen p-5">
-//       <Calendar
-//         localizer={localizer}
-//         defaultDate={new Date()}
-//         defaultView={Views.WEEK}
-//         events={events}
-//         onSelectSlot={handleSelectSlot}
-//         onSelectEvent={handleSelectEvent}
-//         selectable={true}
-//         dayLayoutAlgorithm={"no-overlap"}
-//       />
-//     </div>
-//   );
-// }
-
 import React, { useCallback, useState, useEffect } from "react";
 import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -129,7 +23,7 @@ export default function MyCalendar({ userId }) {
   const fetchAllEvents = async (userId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/task/getEvents/${userId}`
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/task/getEvents/${userId}`
       );
       const transformedEvents = res.data.map((event) => ({
         id: event.id,
@@ -169,11 +63,20 @@ export default function MyCalendar({ userId }) {
   // Save or update event
   const handleSaveEvent = async () => {
     const { id, title, start, end, desc } = modalData;
-    const eventToSave = { title, start, end, desc, userId };
+    const eventToSave = {
+      title,
+      start: moment(start).format("YYYY-MM-DD"),
+      end: moment(end).format("YYYY-MM-DD"),
+      description: desc,
+      userId,
+    };
 
     if (id) {
       await axios
-        .put(`http://localhost:5000/task/events/${id}`, eventToSave)
+        .put(
+          `${import.meta.env.VITE_REACT_APP_BASE_URL}/task/events/${id}`,
+          eventToSave
+        )
         .then(() => {
           setEvents((prevEvents) =>
             prevEvents.map((evt) =>
@@ -185,7 +88,10 @@ export default function MyCalendar({ userId }) {
         .catch((error) => console.error("Error updating event:", error));
     } else {
       await axios
-        .post("http://localhost:5000/task/events", eventToSave)
+        .post(
+          `${import.meta.env.VITE_REACT_APP_BASE_URL}/task/events`,
+          eventToSave
+        )
         .then((response) => {
           setEvents((prevEvents) => [...prevEvents, response.data]);
           handleCloseModal();
@@ -197,11 +103,14 @@ export default function MyCalendar({ userId }) {
   // Delete an event
   const handleDeleteEvent = async (eventId) => {
     await axios
-      .delete(`http://localhost:5000/task/events/${eventId}`)
+      .delete(
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/task/events/${eventId}`
+      )
       .then(() => {
         setEvents((prevEvents) =>
           prevEvents.filter((evt) => evt.id !== eventId)
         );
+        window.location.reload();
       })
       .catch((error) => console.error("Error deleting event:", error));
   };
