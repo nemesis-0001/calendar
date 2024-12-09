@@ -16,6 +16,7 @@ const connection = createConnection({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+   connectTimeout: 500000, // 10 seconds
 });
 
 // connection
