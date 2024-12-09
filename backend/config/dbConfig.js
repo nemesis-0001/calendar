@@ -8,14 +8,17 @@ require("dotenv").config();
 //   database:process.env.DB_NAME
 // });
 
+console.log(process.env.DB_NAME);
+console.log(import.meta.env.DB_NAME);
+
 const connection = createConnection({
   host: import.meta.env.DB_HOST,
   user:  import.meta.DB_USER,
   password:  import.meta.env.DB_PASSWORD,
   database:  import.meta.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+  // waitForConnections: true,
+  // connectionLimit: 10,
+  // queueLimit: 0,
 });
 
 // connection
