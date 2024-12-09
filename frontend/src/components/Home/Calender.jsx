@@ -5,6 +5,7 @@ import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import EventModal from "../Modal/EventModal";
 import { use } from "react";
+import auth from "../Login/firebase";
 
 const localizer = momentLocalizer(moment);
 
