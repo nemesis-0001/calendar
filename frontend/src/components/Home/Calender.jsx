@@ -62,43 +62,39 @@ export default function MyCalendar({ userId }) {
 
   // Save or update event
   const handleSaveEvent = async () => {
-    const { id, title, start, end, desc } = modalData;
-    const eventToSave = {
-      title,
-      start: moment(start).format("YYYY-MM-DD"),
-      end: moment(end).format("YYYY-MM-DD"),
-      description: desc,
-      userId,
-    };
-
-    if (id) {
-      await axios
-        .put(
-          `${import.meta.env.VITE_REACT_APP_BASE_URL}/task/events/${id}`,
-          eventToSave
-        )
-        .then(() => {
-          setEvents((prevEvents) =>
-            prevEvents.map((evt) =>
-              evt.id === id ? { ...evt, ...eventToSave } : evt
-            )
-          );
-          handleCloseModal();
-        })
-        .catch((error) => console.error("Error updating event:", error));
-    } else {
-      await axios
-        .post(
-          `${import.meta.env.VITE_REACT_APP_BASE_URL}/task/events`,
-          eventToSave
-        )
-        .then((response) => {
-          setEvents((prevEvents) => [...prevEvents, response.data]);
-          handleCloseModal();
-        })
-        .catch((error) => console.error("Error saving event:", error));
-    }
+  const { id, title, start, end, desc } = modalData;
+  const eventToSave = {
+    title,
+    start: moment(start).format("YYYY-MM-DDTHH:mm:ss"), // Local time
+    end: moment(end).format("YYYY-MM-DDTHH:mm:ss"),     // Local time
+    description: desc,
+    userId,
   };
+
+  if (id) {
+    // Update existing event
+    await axios
+      .put(`${import.meta.env.VITE_REACT_APP_BASE_URL}/task/events/${id}`, eventToSave)
+      .then(() => {
+        setEvents((prevEvents) =>
+          prevEvents.map((evt) =>
+            evt.id === id ? { ...evt, ...eventToSave } : evt
+          )
+        );
+        handleCloseModal();
+      })
+      .catch((error) => console.error("Error updating event:", error));
+  } else {
+    // Save new event
+    await axios
+      .post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/task/events`, eventToSave)
+      .then((response) => {
+        setEvents((prevEvents) => [...prevEvents, response.data]);
+        handleCloseModal();
+      })
+      .catch((error) => console.error("Error saving event:", error));
+  }
+};
 
   // Delete an event
   const handleDeleteEvent = async (eventId) => {
