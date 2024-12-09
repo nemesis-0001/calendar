@@ -8,8 +8,8 @@ require("dotenv").config();
 //   database:process.env.DB_NAME
 // });
 
-console.log(process.env.DB_NAME);
-console.log(import.meta.env.DB_NAME);
+console.log("process ",process.env.DB_NAME);
+console.log(+"import.meta ",import.meta.env.DB_NAME);
 
 const connection = createConnection({
   host: import.meta.env.DB_HOST,
@@ -19,6 +19,7 @@ const connection = createConnection({
   // waitForConnections: true,
   // connectionLimit: 10,
   // queueLimit: 0,
+   connectTimeout: 80000, // 10 seconds
 });
 
 // connection
@@ -32,4 +33,4 @@ connection.connect((err) => {
 });
 
 // module.exports = pool.promise(); // For using async/await
-export default connection.promise();
+export default connection;
