@@ -157,35 +157,35 @@ export default function EventModal({
                     />
                   </label>
                   <label className="block mt-2">
-                    Start Time
-                    <input
-                      type="datetime-local"
-                      className="w-full mt-1 border-gray-300 rounded-md"
-                      value={
-                        data.start
-                          ? new Date(data.start).toISOString().slice(0, 16)
-                          : ""
-                      }
-                      onChange={(e) =>
-                        onChange("start", new Date(e.target.value))
-                      }
-                    />
-                  </label>
-                  <label className="block mt-2">
-                    End Time
-                    <input
-                      type="datetime-local"
-                      className="w-full mt-1 border-gray-300 rounded-md"
-                      value={
-                        data.end
-                          ? new Date(data.end).toISOString().slice(0, 16)
-                          : ""
-                      }
-                      onChange={(e) =>
-                        onChange("end", new Date(e.target.value))
-                      }
-                    />
-                  </label>
+  Start Time
+  <input
+    type="datetime-local"
+    className="w-full mt-1 border-gray-300 rounded-md"
+    value={
+      data.start
+        ? moment(data.start).local().format("YYYY-MM-DDTHH:mm")
+        : ""
+    }
+    onChange={(e) =>
+      onChange("start", moment(e.target.value).toDate())
+    }
+  />
+</label>
+<label className="block mt-2">
+  End Time
+  <input
+    type="datetime-local"
+    className="w-full mt-1 border-gray-300 rounded-md"
+    value={
+      data.end
+        ? moment(data.end).local().format("YYYY-MM-DDTHH:mm")
+        : ""
+    }
+    onChange={(e) =>
+      onChange("end", moment(e.target.value).toDate())
+    }
+  />
+</label>
                   <label className="block mt-2">
                     Description
                     <textarea
