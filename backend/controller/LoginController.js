@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../config/dbConfig");
+const db = require("../config/dbConfig").default;
 
 const Register = async (req, res) => {
   const { email, uid } = req.body;
