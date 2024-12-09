@@ -1,56 +1,30 @@
-// const mysql = require('mysql2');
-// require("dotenv").config();
-
-// const connection = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database:process.env.DB_NAME
-// });
-
-// connection.connect((err) => {
-//   if (err) {
-//     console.error('Error connecting to the database:', err.stack);
-//     return;
-//   }
-//   console.log('Connected to the database as id ' + connection.threadId);
-// });
-
-// module.exports = connection;
-
 require("dotenv").config();
 const mysql = require("mysql2");
 
-// const connection = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database:process.env.DB_NAME
-// });
-
+//Database Connection
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+  port: process.env.DB_PORT,
+  connectTimeout: 200000,
 });
 
-// connection
+// console.log(process.env.DB_HOST);
+// console.log(process.env.DB_USER);
+// console.log(process.env.DB_PASSWORD);
+// console.log(process.env.DB_NAME);
+// console.log(process.env.DB_PORT);
 
 db.connect((err) => {
   if (err) {
-    console.error("Error connecting to the database:", err.stack);
-    console.error("Error connecting to the database:", err.stack);
+    console.error("Error Connecting to the database :", err);
     return;
   }
-  console.log("Connected to the database as id " + connection.threadId);
-  console.log("Connected to the database as id " + connection.threadId);
+  console.log("Successfully connected to MySql");
 });
 
-// module.exports = pool.promise(); // For using async/await
 module.exports = {
   db,
 };
