@@ -37,7 +37,7 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           {/* <Route path="/home" element={<Home />} /> */}
-          <Route path="/calender" element={<MyCalendar userId={userId} />} />
+          <Route path="/calendar" element={<MyCalendar userId={userId} />} />
         </Routes>
         <ToastContainer />
       </Router>
