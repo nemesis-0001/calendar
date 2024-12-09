@@ -111,6 +111,7 @@
 
 import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import moment from "moment";
 
 export default function EventModal({
   show,
