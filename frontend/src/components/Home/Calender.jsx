@@ -115,8 +115,25 @@ export default function MyCalendar({ userId }) {
       .catch((error) => console.error("Error deleting event:", error));
   };
 
+  const handleLogOut = async () => {
+    try {
+      await auth.signOut();
+      toast.success("Logout successful");
+      window.location.href = "/";
+      // window.
+    } catch (e) {
+      console.log(e, "Error logging out");
+    }
+  };
+
   return (
     <div className="h-screen w-screen bg-white shadow-md rounded-lg p-4">
+      <button
+        className="bg-red-600 hover:bg-red-700  origin-top-right justify-items-end text-white font-bold py-2 px-4 rounded m-2"
+        onClick={handleLogOut}
+      >
+        Logout
+      </button>
       <Calendar
         // localizer={localizer}
         localizer={localizer}

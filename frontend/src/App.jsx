@@ -33,16 +33,11 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={user ? <Navigate to="/home" /> : <LoginForm />}
+            element={user ? <Navigate to="/calendar" /> : <LoginForm />}
           />
           <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
-          {/* <div className="min-h-screen bg-gray-100 p-4">
-            <h1 className="text-2xl font-bold text-center mb-4">
-              My Event Calendar
-            </h1> */}
+          {/* <Route path="/home" element={<Home />} /> */}
           <Route path="/calender" element={<MyCalendar userId={userId} />} />
-          {/* </div> */}
         </Routes>
         <ToastContainer />
       </Router>
