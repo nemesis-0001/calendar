@@ -127,8 +127,8 @@
 //   updateEvent,
 //   deleteEvent,
 // };
-
-const db = require("../config/dbConfig"); // Assuming a db.js file exports the MySQL connection
+require("dotenv").config();
+const { db } = require("../config/dbConfig"); // Assuming a db.js file exports the MySQL connection
 const asyncHandler = require("express-async-handler");
 const { use } = require("../routes/eventRoutes");
 

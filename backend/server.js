@@ -1,12 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const mysql = require("mysql2");
-const db = require("./config/dbConfig");
 
 const allowedOrigins = [
-  "https://customize-task-calendar.vercel.app/",
-  "https://customize-task-calendar-api.onrender.com",
+  "https://customize-task-calendar.vercel.app" || "http://localhost:5173",
 ];
 
 app.use(
