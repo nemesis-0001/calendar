@@ -10,45 +10,84 @@ export const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSignUp = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword)
-      return toast.error("Passwords do not match");
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const uid = userCredential.user.uid;
+  e.preventDefault();
 
-      console.log(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/login`);
-      const res = await axios
-        .post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/register`, {
-          email,
-          uid,
-        })
-        .then((response) => {
-          console.log(response);
-          if (res.status === 200) {
-            console.log(res.data);
-            toast.success("Sign up successful");
-            alert("Sign up successful");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(`Server Error: ${error.response.data.message}`);
-      } else if (error.code === "auth/email-already-in-use") {
-        toast.error("This email is already registered. Please log in instead.");
-      } else {
-        toast.error("Sign up failed. Please try again.");
-      }
-      console.error("Error:", error);
+  if (password !== confirmPassword) {
+    return toast.error("Passwords do not match");
+  }
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const uid = userCredential.user.uid;
+
+    console.log(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/register`);
+
+    // ✅ Corrected: Use await directly, no .then()
+    const res = await axios.post(
+      `${import.meta.env.VITE_REACT_APP_BASE_URL}/user/register`,
+      { email, uid }
+    );
+
+    if (res.status === 200) {
+      console.log(res.data);
+      toast.success("Sign up successful");
+      alert("Sign up successful");
     }
-  };
+  } catch (error) {
+    if (error.response && error.response.data) {
+      toast.error(`Server Error: ${error.response.data.message}`);
+    } else if (error.code === "auth/email-already-in-use") {
+      toast.error("This email is already registered. Please log in instead.");
+    } else {
+      toast.error("Sign up failed. Please try again.");
+    }
+    console.error("Error:", error);
+  }
+};
+
+  // const handleSignUp = async (e) => {
+  //   e.preventDefault();
+  //   if (password !== confirmPassword)
+  //     return toast.error("Passwords do not match");
+  //   try {
+  //     const userCredential = await createUserWithEmailAndPassword(
+  //       auth,
+  //       email,
+  //       password
+  //     );
+  //     const uid = userCredential.user.uid;
+
+  //     console.log(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/login`);
+  //     const res = await axios.post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/register`, {
+  //         email,
+  //         uid,
+  //       })
+  //       .then((response) => {
+  //         console.log(response);
+  //         if (res.status === 200) {
+  //           console.log(res.data);
+  //           toast.success("Sign up successful");
+  //           alert("Sign up successful");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   } catch (error) {
+  //     if (error.response && error.response.data) {
+  //       toast.error(`Server Error: ${error.response.data.message}`);
+  //     } else if (error.code === "auth/email-already-in-use") {
+  //       toast.error("This email is already registered. Please log in instead.");
+  //     } else {
+  //       toast.error("Sign up failed. Please try again.");
+  //     }
+  //     console.error("Error:", error);
+  //   }
+  // };
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 xl:px-0 w-full">

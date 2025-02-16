@@ -132,37 +132,63 @@ const { db } = require("../config/dbConfig"); // Assuming a db.js file exports t
 const asyncHandler = require("express-async-handler");
 const { use } = require("../routes/eventRoutes");
 
+// console.log(db);
+
 // Create a new event
-const createEvent = (req, res) => {
-  console.log("Request Body:", req.body); // Check what you're receiving
+// const createEvent = (req, res) => {
+//   console.log("Request Body:", req.body); // Check what you're receiving
 
-  const { title, start, end, userId, desc } = req.body;
-  console.log(title, start, end, userId, desc); // Log each property
+//   const { title, start, end, userId, description } = req.body;
+//   console.log(title, start, end, userId, description); // Log each property
 
-  if (!title || !start || !end || !userId) {
-    return res.status(400).json({ error: "Required fields are missing." });
+//   if (!title || !start || !end || !userId) {
+//     return res.status(400).json({ error: "Required fields are missing." });
+//   }
+
+//   const query = `
+//     INSERT INTO events (title, start, end, firebaseUid, description)
+//     VALUES (?, ?, ?, ?, ?);
+//   `;
+
+//   db.query(query, [title, start, end, userId, description || ""], (err, result) => {
+//     if (err) {
+//       console.error("Error inserting event:", err);
+//       return res.status(500).json({ error: "Database error." });
+//     }
+
+//     // Check if no events are found
+//     if (res.length === 0) {
+//       return res.status(404).json({ message: "No events found for this user" });
+//     }
+//     res
+//       .status(201)
+//       .json({ id: result.insertId, title, start, end, userId, description });
+//   });
+// };
+
+const createEvent=async (req,res)=>{
+  const { title, start, end, description, userId } = req.body;
+
+  try {
+    // 1️⃣ Check if the user exists
+    const [user] = await db.promise().query("SELECT * FROM users WHERE firebaseUid = ?", [userId]);
+
+    if (user.length === 0) {
+      return res.status(400).json({ error: "User does not exist. Please register first." });
+    }
+
+    // 2️⃣ Insert event if user exists
+    const [result] = await db.promise().query(
+      "INSERT INTO events (title, start, end, description, firebaseUid) VALUES (?, ?, ?, ?, ?)",
+      [title, start, end, description, userId]
+    );
+
+    res.status(201).json({ message: "Event added successfully", eventId: result.insertId });
+  } catch (error) {
+    console.error("Error inserting event:", error);
+    res.status(500).json({ error: "Database error" });
   }
-
-  const query = `
-    INSERT INTO events (title, start, end, firebaseUid, description)
-    VALUES (?, ?, ?, ?, ?)
-  `;
-
-  db.query(query, [title, start, end, userId, desc || ""], (err, result) => {
-    if (err) {
-      console.error("Error inserting event:", err);
-      return res.status(500).json({ error: "Database error." });
-    }
-
-    // Check if no events are found
-    if (res.length === 0) {
-      return res.status(404).json({ message: "No events found for this user" });
-    }
-    res
-      .status(201)
-      .json({ id: result.insertId, title, start, end, userId, desc });
-  });
-};
+}
 
 // Fetch all events for a specific user
 // const getEvents = (req, res) => {
@@ -295,10 +321,16 @@ const deleteEvent = (req, res) => {
   });
 };
 
+const test=()=>{
+  console.log("in test");
+  
+}
+
 module.exports = {
   createEvent,
   getEvents,
   getEvent,
   updateEvent,
   deleteEvent,
+  test
 };

@@ -3,7 +3,10 @@ const app = express();
 const cors = require("cors");
 
 const allowedOrigins = [
-  "https://customize-task-calendar.vercel.app" || "http://localhost:5173",
+  "https://customize-task-calendar.vercel.app",
+  "http://localhost:5175",
+  "http://localhost:3000",
+  "https://customize-task-calendar-api.onrender.com"
 ];
 
 app.use(
@@ -30,7 +33,7 @@ const eventRoute = require("./routes/eventRoutes");
 app.use("/user", loginRoute);
 app.use("/task", eventRoute);
 
-const port = import.meta.env.PORT;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
