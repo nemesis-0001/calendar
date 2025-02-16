@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "./firebase";
 import { toast } from "react-toastify";
 import axios from "axios";
+import logo from "./assets/undraw_authentication_tbfc.svg"
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -48,7 +49,7 @@ const LoginForm = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           alt="Login"
-          src="src/assets/undraw_authentication_tbfc.svg"
+          src={logo}
           className="mx-auto h-20 w-auto"
         />
         <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
