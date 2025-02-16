@@ -10,7 +10,7 @@ export const Home = () => {
       window.location.href = "/";
       // window.
     } catch (e) {
-      console.log(e, "Error logging out");
+      toast.error(e, "Error logging out");
     }
   };
   return (

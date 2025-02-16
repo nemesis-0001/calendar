@@ -18,7 +18,7 @@ const LoginForm = () => {
       );
 
       const uid = userCredential.user.uid; // Get UID from the user object
-      console.log(uid);
+      // console.log(uid);
 
       // const res = await axios.post(`http://localhost:5000/user/login`, {
       //   email,
@@ -32,8 +32,9 @@ const LoginForm = () => {
       // }
       // Additional actions after successful login can be added here
     } catch (error) {
-      console.error("Login failed", error);
+      // console.error("Login failed", error);
       alert("Login failed");
+      // toast.warning("Login failed");
     }
   };
 
@@ -47,8 +48,8 @@ const LoginForm = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           alt="Your Company"
-          src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-          className="mx-auto h-10 w-auto"
+          src="../public/undraw_authentication_tbfc.svg"
+          className="mx-auto h-20 w-auto"
         />
         <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
           Sign in to your account

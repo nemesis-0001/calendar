@@ -24,7 +24,7 @@ export const Register = () => {
     );
     const uid = userCredential.user.uid;
 
-    console.log(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/register`);
+    // console.log(`${import.meta.env.VITE_REACT_APP_BASE_URL}/user/register`);
 
     // ✅ Corrected: Use await directly, no .then()
     const res = await axios.post(
@@ -33,17 +33,20 @@ export const Register = () => {
     );
 
     if (res.status === 200) {
-      console.log(res.data);
-      toast.success("Sign up successful");
+      // console.log(res.data);
+      // toast.success("Sign up successful");
       alert("Sign up successful");
     }
   } catch (error) {
     if (error.response && error.response.data) {
-      toast.error(`Server Error: ${error.response.data.message}`);
+      // toast.error(`Server Error: ${error.response.data.message}`);
+      alert(`Server Error`);
     } else if (error.code === "auth/email-already-in-use") {
-      toast.error("This email is already registered. Please log in instead.");
+      // toast.error("This email is already registered. Please log in instead.");
+      alert("This email is already registered. Please log in instead.");
     } else {
-      toast.error("Sign up failed. Please try again.");
+      // toast.error("Sign up failed. Please try again.");
+      alert("Sign up failed. Please try again.");
     }
     console.error("Error:", error);
   }
@@ -93,9 +96,9 @@ export const Register = () => {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 xl:px-0 w-full">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            alt="Your Company"
-            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-10 w-auto"
+            alt="Register"
+            src="../public/undraw_sign-up_z2ku.svg"
+            className="mx-auto h-20 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
             Sign in to your account
