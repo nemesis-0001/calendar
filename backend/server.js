@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 
 const allowedOrigins = [
-  "https://customize-task-calendar.vercel.app" || "http://localhost:5173",
+  "https://customize-task-calendar.vercel.app" || "http://localhost:5173" || "https://customize-task-calendar-api.onrender.com",
 ];
 
 app.use(
