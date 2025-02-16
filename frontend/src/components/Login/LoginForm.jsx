@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "./firebase";
 import { toast } from "react-toastify";
 import axios from "axios";
-import logo from "./assets/undraw_authentication_tbfc.svg"
+import logo from "../../assets/undraw_authentication_tbfc.svg"
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");

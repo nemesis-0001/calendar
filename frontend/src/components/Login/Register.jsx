@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import auth from "./firebase";
 import axios from "axios";
+import logo from "../../assets/undraw_authentication_tbfc.svg"
+
 
 export const Register = () => {
   const [email, setEmail] = useState("");
@@ -98,7 +100,7 @@ export const Register = () => {
           <img
             alt="Register"
             // src="./../assets/undraw_sign-up_z2ku.svg"
-            src="src/assets/undraw_sign-up_z2ku.svg"
+            src={logo}
             className="mx-auto h-20 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
