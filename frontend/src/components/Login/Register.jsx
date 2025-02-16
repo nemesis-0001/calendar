@@ -97,7 +97,8 @@ export const Register = () => {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Register"
-            src="../public/undraw_sign-up_z2ku.svg"
+            // src="./../assets/undraw_sign-up_z2ku.svg"
+            src="src/assets/undraw_sign-up_z2ku.svg"
             className="mx-auto h-20 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
